@@ -365,18 +365,18 @@ if table_input:
         st.subheader("Enter Word Lists")
         
         # First text input and its optimized field (Field 1)
-        first_field = st.text_input("Enter first text (max 30 characters)", max_chars=90)
+        first_field = st.text_input("Enter first text (max 30 characters)", max_chars=120)
         for i, field in enumerate(optimized_fields.get("Field 1s", []), start=1):
             st.write(f"**Optimized Field 1-{i}:**", field[0])
         
         # Second text input and its optimized field (Field 2)
-        second_field = st.text_input("Enter second text (max 30 characters)", max_chars=90)
+        second_field = st.text_input("Enter second text (max 30 characters)", max_chars=120)
         # Iterate through all three Field 2s
         for i, field in enumerate(optimized_fields.get("Field 2s", []), start=1):
             st.write(f"**Optimized Field 2-{i}:**", field[0])
         
         # Third text input and its optimized field (Field 3)
-        third_field = st.text_input("Enter third text (comma or space-separated, max 100 characters)", max_chars=300)
+        third_field = st.text_input("Enter third text (comma or space-separated, max 100 characters)", max_chars=400)
         # Iterate through all three Field 1s
         # Iterate through all three Field 3s
         for i, field in enumerate(optimized_fields.get("Field 3s", []), start=1):

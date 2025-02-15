@@ -288,19 +288,19 @@ def optimize_keyword_placement(keyword_list):
     
     # Fill all Field 1s first (Three fields, each 29 characters, multiplier 1)
     field1_list = []
-    for _ in range(3):
+    for _ in range(4):
         field, points, used_kw, length = construct_best_phrase(29, sorted_keywords, 1, used_words, used_keywords)
         field1_list.append((" ".join(field), points, length))
     
     # Fill all Field 2s next (Three fields, each 29 characters, multiplier 1)
     field2_list = []
-    for _ in range(3):
+    for _ in range(4):
         field, points, used_kw, length = construct_best_phrase(29, sorted_keywords, 1, used_words, used_keywords)
         field2_list.append((" ".join(field), points, length))
     
     # Fill all Field 3s last (Three fields, each allowing word breaking, 100-character limit, multiplier 1/3)
     field3_list = []
-    for _ in range(3):
+    for _ in range(4):
         field, points, used_kw, length = fill_field_with_word_breaking(100, sorted_keywords, used_words, used_keywords, stop_words)
         field3_str = ",".join(field)
         if len(field3_str) > 100:

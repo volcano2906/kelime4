@@ -278,33 +278,41 @@ def fill_field_with_word_breaking(field_limit, keywords, used_words, used_keywor
 
 
 def optimize_keyword_placement(keyword_list):
-    """Optimize keyword placement across three fields for maximum points."""
+    """Optimize keyword placement across multiple fields for maximum points."""
     expanded_keywords = expand_keywords(keyword_list, max_length=29)
     sorted_keywords = calculate_effective_points(expanded_keywords)
-    sorted_keywords=sort_keywords_by_total_points(sorted_keywords)
+    sorted_keywords = sort_keywords_by_total_points(sorted_keywords)
     
     used_words = set()
     used_keywords = set()
     
-    # Construct best phrase dynamically for Field 1 (multiplier 1)
-    field1, points1, used_kw1, length1 = construct_best_phrase(29, sorted_keywords, 1, used_words, used_keywords)
-    # Construct best phrase dynamically for Field 2 (multiplier 1)
-    field2, points2, used_kw2, length2 = construct_best_phrase(29, sorted_keywords, 1, used_words, used_keywords)
-    # Fill Field 3 (multiplier 1/3, allows word breaking) with a 100-character limit
-    field3, points3, used_kw3, length3 = fill_field_with_word_breaking(100, sorted_keywords, used_words, used_keywords, stop_words)
+    # Fill all Field 1s first (Three fields, each 29 characters, multiplier 1)
+    field1_list = []
+    for _ in range(3):
+        field, points, used_kw, length = construct_best_phrase(29, sorted_keywords, 1, used_words, used_keywords)
+        field1_list.append((" ".join(field), points, length))
     
-    # Join Field 3 keywords with a comma (no extra space)
-    field3_str = ",".join(field3)
-    # Ensure that the final string does not exceed 100 characters.
-    if len(field3_str) > 130:
-        field3_str = field3_str[:130]
+    # Fill all Field 2s next (Three fields, each 29 characters, multiplier 1)
+    field2_list = []
+    for _ in range(3):
+        field, points, used_kw, length = construct_best_phrase(29, sorted_keywords, 1, used_words, used_keywords)
+        field2_list.append((" ".join(field), points, length))
     
-    total_points = points1 + points2 + points3
+    # Fill all Field 3s last (Three fields, each allowing word breaking, 100-character limit, multiplier 1/3)
+    field3_list = []
+    for _ in range(3):
+        field, points, used_kw, length = fill_field_with_word_breaking(100, sorted_keywords, used_words, used_keywords, stop_words)
+        field3_str = ",".join(field)
+        if len(field3_str) > 100:
+            field3_str = field3_str[:100]
+        field3_list.append((field3_str, points, len(field3_str)))
+    
+    total_points = sum([points for _, points, _ in field1_list + field2_list + field3_list])
     
     return {
-        "Field 1": (" ".join(field1), points1, length1),
-        "Field 2": (" ".join(field2), points2, length2),
-        "Field 3": (field3_str, points3, len(field3_str)),
+        "Field 1s": field1_list,
+        "Field 2s": field2_list,
+        "Field 3s": field3_list,
         "Total Points": total_points
     }
 

@@ -297,8 +297,6 @@ def optimize_keyword_placement(keyword_list):
     used_words,  # Words already used
     used_keywords,  # Keywords already used
     stop_words,  # Common words to ignore
-    " ".join(field1),  # Convert Field 1 list to a string
-    " ".join(field2)   # Convert Field 2 list to a string
     )
     points3 *= (1/1)
     

@@ -366,15 +366,22 @@ if table_input:
         
         # First text input and its optimized field (Field 1)
         first_field = st.text_input("Enter first text (max 30 characters)", max_chars=30)
-        st.write("**Optimized Field 1:**", optimized_fields.get("Field 1")[0])
+        for i, field in enumerate(optimized_fields.get("Field 1s", []), start=1):
+            st.write(f"**Optimized Field 1-{i}:**", field[0])
         
         # Second text input and its optimized field (Field 2)
         second_field = st.text_input("Enter second text (max 30 characters)", max_chars=30)
-        st.write("**Optimized Field 2:**", optimized_fields.get("Field 2")[0])
+        # Iterate through all three Field 2s
+        for i, field in enumerate(optimized_fields.get("Field 2s", []), start=1):
+            st.write(f"**Optimized Field 2-{i}:**", field[0])
         
         # Third text input and its optimized field (Field 3)
         third_field = st.text_input("Enter third text (comma or space-separated, max 100 characters)", max_chars=100)
-        st.write("**Optimized Field 3:**", optimized_fields.get("Field 3")[0])
+        # Iterate through all three Field 1s
+        # Iterate through all three Field 3s
+        for i, field in enumerate(optimized_fields.get("Field 3s", []), start=1):
+            st.write(f"**Optimized Field 3-{i}:**", field[0])
+
         
         # Combine the three fields for word analysis
         combined_text = f"{first_field} {second_field} {third_field}".strip()
